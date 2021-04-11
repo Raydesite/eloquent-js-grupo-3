@@ -96,9 +96,8 @@ console.log(Cada2(arr2, n => n % 2 === 0));
 // EJERCICIO 4: DIRECCIÓN DE ESCRITURA DOMINANTE
 
 // load dependencies
+// scripts.js contiene un arrelgo con los códigos unicode
 require("./Recursos/scripts.js");
-// load dependencies
-//require("./code/load")("code/scripts.js", "code/chapter/05_higher_order.js", "code/intro.js");
 
 function characterScript(code) {
     for (let script of SCRIPTS) {
@@ -125,12 +124,15 @@ function characterScript(code) {
     return counts;
   }
 
-
+// Se inspira en la función textScripts (codigosTexto) del libro
+// Primero produce un arreglo de objetos con la cantidad de caracteres
+// por dirección de la escritura. Se excluyen la categoría "ninguno" (espacios, etc.)
+// Si no hay elementos en el arreglo, se devuelve ltr
+// Se utiliza reduce para devolver la dirección mayoritaria
 function DireccionDominate (texto) {
-    console.log(texto);
     let contador = countBy(texto, caracter => {
         let cadena = characterScript(caracter.codePointAt(0));
-        return cadena ? cadena.direction : "ninguno";
+        return cadena ? cadena.direction : "ninguno"
     }).filter(({name}) => name != "ninguno");
 
     if (contador.length == 0) return "ltr";
@@ -138,19 +140,16 @@ function DireccionDominate (texto) {
     return contador.reduce((a, b) => a.count > b.count ? a : b).name;
 }
 
+
 console.log("\nDirección dominate");
-texto = "Hola!.مساء الخيرمساء الخيرمساء الخير";
+texto1 = "Hola! soy yo الخيرمساء";
+texto2 = "مساء الخيرمساء الخيرمساء الخير  перүкерје4и керек";
+texto3 = "الخير  перүкерје4и керек";
+texto4 = "Hola!.مساк 对方的放方收购发给的跟";
+texto5 = "مساк 对方的 ꡂꡂꡂꡈꡘꡜꡎꡘꡎꡘꡜ";
 
-console.log(DireccionDominate(texto));
-
-
-function dominantDirection(text) {
-    let counted = countBy(text, char => {
-      let script = characterScript(char.codePointAt(0));
-      return script ? script.direction : "none";
-    }).filter(({name}) => name != "none");
-  
-    if (counted.length == 0) return "ltr";
-  
-    return counted.reduce((a, b) => a.count > b.count ? a : b).name;
-  }
+console.log(texto1, DireccionDominate(texto1));
+console.log(texto2, DireccionDominate(texto2));
+console.log(texto3, DireccionDominate(texto3));
+console.log(texto4, DireccionDominate(texto4));
+console.log(texto5, DireccionDominate(texto5));
