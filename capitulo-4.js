@@ -247,7 +247,7 @@ function PosicionRecursiva(i, lista) {
 // console.log(PosicionRecursiva(3, lista));
 
 
-// EJERCICIO 4: COMPRACIÓN PROFUNDA
+// EJERCICIO 4: COMPARACIÓN PROFUNDA
 // Compara 2 valores, incluso cuando se trata de objetos
 // de varias dimensiones
 
@@ -266,6 +266,8 @@ function ComparacionProfunda(a,b) {
     // Se hacen llamados recursivos precisamente para tratar las
     // dimensiones múltiples en arreglos y objetos
     // Se itera sobre las claves más numerosas
+    // Al comparar a[clave] con b[clave] no importa que las claves
+    // estén en diferente orden, y si no son iguales, dará falso
     else {
         for (let clave of (a.length >= b.length ? Object.keys(a) : Object.keys(b))) {
             if (! ComparacionProfunda(a[clave], b[clave])) return false;
@@ -308,14 +310,26 @@ let obj5 = {
     valor2: "hola",
     arreglo1: [1, 2]
 }
+let obj6 = {
+    arreglo1: [1, 2],
+    valor1: 1,
+    valor2: "hola"    
+}
+let obj7 = {
+    arr: [1, 2],
+    v1: 1,
+    v2: "hola"    
+}
 
-console.log(ComparacionProfunda(cadena1, cadena1));
-console.log(ComparacionProfunda(arreglo1, arreglo2));
-console.log(ComparacionProfunda(arreglo3, arreglo4));
-console.log(ComparacionProfunda(obj1, obj2));
-console.log(ComparacionProfunda(obj1, obj3));
-console.log(ComparacionProfunda(obj4, obj1));
-console.log(ComparacionProfunda(obj4, obj5));
-console.log(ComparacionProfunda(obj1, cadena1));
-console.log(ComparacionProfunda(obj1, null));
-console.log(ComparacionProfunda(null, null));
+// console.log(ComparacionProfunda(cadena1, cadena1));
+// console.log(ComparacionProfunda(arreglo1, arreglo2));
+// console.log(ComparacionProfunda(arreglo3, arreglo4));
+// console.log(ComparacionProfunda(obj1, obj2));
+// console.log(ComparacionProfunda(obj1, obj3));
+// console.log(ComparacionProfunda(obj4, obj1));
+// console.log(ComparacionProfunda(obj4, obj5));
+// console.log(ComparacionProfunda(obj1, cadena1));
+// console.log(ComparacionProfunda(obj1, null));
+// console.log(ComparacionProfunda(null, null));
+console.log(ComparacionProfunda(obj6, obj5));
+console.log(ComparacionProfunda(obj7, obj5));
