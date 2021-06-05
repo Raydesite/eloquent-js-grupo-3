@@ -57,7 +57,7 @@ Ciclo (10, n => n >= 0, n => n - 2, jugando);
 
 // EJERCICIO 3: CADA - EVERY
 
-function Cada (arreglo, predicado) {
+function Cada(arreglo, predicado) {
 
     for (let i= 0; i <= arreglo.length - 1; i++) {
         if (! predicado(arreglo[i])) return false;

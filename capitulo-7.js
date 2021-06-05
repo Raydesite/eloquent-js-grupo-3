@@ -269,4 +269,3 @@ class ConjuntoP {
 // console.log(sinb);
 // console.log(abc.tiene("b"));
 // console.log(sinb.tiene("b"));
-

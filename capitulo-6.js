@@ -74,9 +74,19 @@ class Grupo {
 
     }
 
-    [Symbol.iterator]() {
-        return new IteradorGrupo(this);
-    }   
+    // Redefiniendo [Symbol.iterator] como un generador
+    // propio de la clase
+    *[Symbol.iterator]() {
+        for (let i = 0; i < this.elementos.length; i++) {
+            yield this.elementos[i] * 5;
+        }
+    }
+
+    // Usando una clase iterador
+    // [Symbol.iterator]() {
+    //     return new IteradorGrupo(this);
+    // } 
+
 }
 
 console.log("\nClase Grupo");
@@ -95,13 +105,13 @@ grupo.borrar(4);
 console.log(grupo);
 
 let arreglo = [1, 3, 5, 7];
-console.log(Grupo.desde(arreglo));
+let grupo2 = Grupo.desde(arreglo);
+console.log(grupo2);
 
-// Iterador "natural" que puede tener
-// cualquier objeto iterable
+// Iterador por defecto que tiene cualquier objeto iterable
 console.log("\nSymbol.iterator");
-let iterador = grupo.elementos[Symbol.iterator]();
-for (let elemento of grupo) {
+let iterador = grupo2.elementos[Symbol.iterator]();
+for (let elemento of iterador) {
     console.log(elemento);
 }
 // console.log(iterador.next());
@@ -115,21 +125,21 @@ class IteradorGrupo {
         this.grupo = grupo,
         this.contador = 0
     }
+    // Hay que evaluar primero la opción que permite 
+    // parar el ciclo para que no "muestre" un undefined en el for...of
     next () {
-        console.log("Iterador construido")
-        if (this.grupo.elementos.length >= 0 && this.contador <= this.grupo.elementos.length) {
-            let resultado = {
-                value: this.grupo.elementos[this.contador],
-                done: false,
-            }
-            this.contador++;
-            return resultado;
-        }
-        else {
+        if (this.grupo.elementos.length < 0 || this.grupo.elementos.length <= this.contador ) {
             return {
-                value: undefined,
                 done: true
             }
+        }
+        else {
+            let resultado = {
+                value: this.grupo.elementos[this.contador++] * 2,
+                done: false,
+            }
+
+            return resultado;
         }
     }
 }
@@ -137,22 +147,15 @@ class IteradorGrupo {
 
 console.log("\nIterador de la clase");
 
-for (let elemento of grupo) {
+for (let elemento of grupo2) {
     console.log(elemento);
 }
 
-// class GeneradorGrupo {
-//     constructor (grupo) {
-//         this.grupo = grupo
-//     }
-//     next () {
-        
-        
-//     }
-// }
 
 // EJERCICIO 4: MÉTODO PRESTADO
-
+// Utilizamos Symbol para crear la propiedad hasOwnProperty
+// dentro de la clase y que no afecte la función
+// del mismo nombre
 const hasOwnProperty = Symbol("hasOwnProperty");
 
 let map = {
@@ -162,6 +165,7 @@ let map = {
     [hasOwnProperty]: "Símbolo"
 }
 
+console.log("\nMétodo prestado");
 console.log(map[hasOwnProperty]);
 console.log(typeof map[hasOwnProperty]);
 console.log(map.hasOwnProperty("prop1"));
